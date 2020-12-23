@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Database;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +26,30 @@ namespace ShopApi.Controllers
             return await _catalog.GetWithFilters(filters);
         }
 
+        [HttpGet]
+        [Route("{productId:int}/sizes")]
+        public async Task<Dictionary<string, short>> GetSizesFor(int productId)
+        {
+            return await _catalog.GetSizesFor(productId);
+        }
+
         [HttpPost]
         [Route("addItem")]
-        public async void AddItem([FromBody] AddItem request)
+        //[Authorize(Roles = "admin")]
+        public async Task<IActionResult> AddItem([FromForm] AddItem request)
         {
-            await _catalog.AddProduct(request);
+            if (!ModelState.IsValid)
+                return BadRequest();
+            try
+            {
+                await _catalog.AddProduct(request);
+            }
+            catch (Exception)
+            {
+                return new StatusCodeResult(500);
+            }
+
+            return new EmptyResult();
         }
     }
 }

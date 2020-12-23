@@ -22,7 +22,7 @@ namespace Database
         public int ShippingId { get; set; }
         [Column("date", TypeName = "timestamp")]
         public DateTime Date { get; set; }
-        [Column("payment", TypeName = "decimal(10,8)")]
+        [Column("payment", TypeName = "decimal(10,2)")]
         public decimal Payment { get; set; }
 
         [ForeignKey(nameof(ShippingId))]

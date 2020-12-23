@@ -17,12 +17,12 @@ namespace Database
         [Key]
         [Column("id")]
         public int Id { get; set; }
+        [Required]
         [Column("vendor_code", TypeName = "varchar(16)")]
         public string VendorCode { get; set; }
         [Required]
-        [Column("name", TypeName = "varchar(16)")]
+        [Column("name", TypeName = "varchar(64)")]
         public string Name { get; set; }
-        [Required]
         [Column("price", TypeName = "decimal(8,2)")]
         public decimal Price { get; set; }
         [Column("description", TypeName = "mediumtext")]
@@ -31,10 +31,10 @@ namespace Database
         [Column("gender", TypeName = "enum('Male','Female','Unisex')")]
         public string Gender { get; set; }
         [Required]
-        [Column("category", TypeName = "enum('Clothes','Footwear','Accessories','Sportswear')")]
+        [Column("category", TypeName = "enum('Clothes','Footwear','Sportswear')")]
         public string Category { get; set; }
         [Required]
-        [Column("brand", TypeName = "enum('Adidas','Nike','Puma','Supreme')")]
+        [Column("brand", TypeName = "enum('Adidas','Nike','Puma','Supreme','Asos','Bershka')")]
         public string Brand { get; set; }
         [Required]
         [Column("color", TypeName = "enum('White','Black','Black&White','Grey','Red','Orange','Yellow','Green','Cyan','Blue','Purple','Pink','Multicolor')")]

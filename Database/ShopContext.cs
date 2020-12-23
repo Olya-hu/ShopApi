@@ -1,19 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
 namespace Database
 {
     public partial class ShopContext : DbContext
     {
-        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
         public ShopContext(IConfiguration configuration)
         {
-            _connectionString = configuration["ConnectionString"];
+            _configuration = configuration;
         }
 
-        public ShopContext(DbContextOptions<ShopContext> options)
+        public ShopContext(DbContextOptions<ShopContext> options, IConfiguration configuration)
             : base(options)
         {
+            _configuration = configuration;
         }
 
         public virtual DbSet<Admin> Admin { get; set; }
@@ -28,7 +31,8 @@ namespace Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql(_connectionString, x => x.ServerVersion("8.0.22-mysql"));
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySql(_configuration.GetConnectionString("Debug"), x => x.ServerVersion("8.0.22-mysql"));
             }
         }
 
@@ -36,6 +40,10 @@ namespace Database
         {
             modelBuilder.Entity<Admin>(entity =>
             {
+                entity.HasIndex(e => e.Username)
+                    .HasName("username_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.Password)
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
@@ -68,9 +76,13 @@ namespace Database
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.HasIndex(e => e.VendorCode)
+                    .HasName("vendor_code_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.Brand)
                     .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
+                    .HasCollation("utf8mb4_general_ci");
 
                 entity.Property(e => e.Category)
                     .HasCharSet("utf8mb4")
@@ -140,6 +152,10 @@ namespace Database
 
             modelBuilder.Entity<Shipping>(entity =>
             {
+                entity.HasIndex(e => e.Name)
+                    .HasName("name_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.Company)
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
@@ -155,6 +171,10 @@ namespace Database
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasIndex(e => e.Username)
+                    .HasName("username_UNIQUE")
+                    .IsUnique();
+
                 entity.Property(e => e.Address)
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");

@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using Database;
 using Services.Catalog;
+using Services.Orders;
 
 namespace Services
 {
@@ -8,8 +8,8 @@ namespace Services
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ShopContext>().AsSelf().SingleInstance();
             builder.RegisterType<CatalogService>().As<ICatalog>();
+            builder.RegisterType<OrdersService>().As<IOrders>();
         }
     }
 }

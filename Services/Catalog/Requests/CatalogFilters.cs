@@ -1,4 +1,4 @@
-﻿namespace Services.Catalog
+﻿namespace Services.Catalog.Requests
 {
     public class CatalogFilters
     {

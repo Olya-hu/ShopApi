@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Database;
 using Microsoft.EntityFrameworkCore;
+using Services.Catalog.Requests;
 
 namespace Services.Catalog
 {
@@ -54,14 +54,20 @@ namespace Services.Catalog
             return await products.ToListAsync();
         }
 
-        public async Task AddProduct(Requests.AddItem request)
+        public async Task<Dictionary<string, short>> GetSizesFor(int productId)
+        {
+            return (await _dbContext.ProductSize.Where(ps => ps.ProductId == productId).ToListAsync())
+                .ToDictionary(ps => ps.Size, ps => ps.Quantity);
+        }
+
+        public async Task AddProduct(AddItem request)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 if (request.Sizes.Length != request.Quantities.Length)
                     throw new Exception("Массивы размеров и их количеств не совпадают!");
-                var product = (await _dbContext.Product.AddAsync(new Product
+                var product = await _dbContext.Product.AddAsync(new Product
                 {
                     VendorCode = request.VendorCode,
                     Name = request.Name,
@@ -71,18 +77,18 @@ namespace Services.Catalog
                     Category = request.Category,
                     Brand = request.Brand,
                     Color = request.Color
-                })).Entity;
-                if (product == null) throw new DBConcurrencyException("Не удалось добавить продукт!");
+                });
+                await _dbContext.SaveChangesAsync();
                 for (int i = 0; i < request.Sizes.Length; i++)
                 {
-                    var ps = (await _dbContext.ProductSize.AddAsync(new ProductSize
+                    await _dbContext.ProductSize.AddAsync(new ProductSize
                     {
-                        ProductId = product.Id,
+                        ProductId = product.Entity.Id,
                         Size = request.Sizes[i],
                         Quantity = request.Quantities[i]
-                    })).Entity;
-                    if (ps == null) throw new DBConcurrencyException("Не удалось добавить размеры. Откатываем изменения.");
+                    });
                 }
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {

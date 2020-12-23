@@ -4,6 +4,7 @@ namespace Services.Catalog.Requests
 {
     public class AddItem
     {
+        [Required]
         public string VendorCode { get; set; }
         [Required]
         public string Name { get; set; }
