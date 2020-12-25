@@ -1,4 +1,6 @@
-﻿namespace Services.Catalog.Requests
+﻿using Database;
+
+namespace Services.Catalog.Requests
 {
     public class CatalogFilters
     {
@@ -9,7 +11,7 @@
         public string[] Genders { get; set; }
         public string[] Categories { get; set; }
         public string[] Brands { get; set; }
-        public string[] Colors { get; set; }
+        public ProductColor[] Colors { get; set; }
         public string[] Sizes { get; set; }
     }
 }

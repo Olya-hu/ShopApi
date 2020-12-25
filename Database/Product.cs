@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,7 +37,7 @@ namespace Database
         public string Brand { get; set; }
         [Required]
         [Column("color", TypeName = "enum('White','Black','Black&White','Grey','Red','Orange','Yellow','Green','Cyan','Blue','Purple','Pink','Multicolor')")]
-        public string Color { get; set; }
+        public ProductColor Color { get; set; }
 
         [InverseProperty("Product")]
         public virtual ICollection<ProductOrder> ProductOrder { get; set; }

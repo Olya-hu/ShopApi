@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Database;
 
 namespace Services.Catalog.Requests
 {
@@ -18,7 +19,7 @@ namespace Services.Catalog.Requests
         [Required]
         public string Brand { get; set; }
         [Required]
-        public string Color { get; set; }
+        public ProductColor Color { get; set; }
         [Required]
         public string[] Sizes { get; set; }
         [Required]
