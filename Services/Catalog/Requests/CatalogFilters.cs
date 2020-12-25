@@ -1,4 +1,4 @@
-﻿using Database;
+﻿using Database.Enums;
 
 namespace Services.Catalog.Requests
 {
@@ -8,10 +8,10 @@ namespace Services.Catalog.Requests
         public string NameContains { get; set; }
         public decimal? PriceHigherThan { get; set; }
         public decimal? PriceLowerThan { get; set; }
-        public string[] Genders { get; set; }
-        public string[] Categories { get; set; }
-        public string[] Brands { get; set; }
-        public ProductColor[] Colors { get; set; }
-        public string[] Sizes { get; set; }
+        public Gender[] Genders { get; set; }
+        public Category[] Categories { get; set; }
+        public Brand[] Brands { get; set; }
+        public Color[] Colors { get; set; }
+        public Size[] Sizes { get; set; }
     }
 }

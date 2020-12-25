@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Database.Enums;
 
 namespace Database
 {
@@ -28,16 +29,16 @@ namespace Database
         public string Description { get; set; }
         [Required]
         [Column("gender", TypeName = "enum('Male','Female','Unisex')")]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         [Required]
         [Column("category", TypeName = "enum('Clothes','Footwear','Sportswear')")]
-        public string Category { get; set; }
+        public Category Category { get; set; }
         [Required]
         [Column("brand", TypeName = "enum('Adidas','Nike','Puma','Supreme','Asos','Bershka')")]
-        public string Brand { get; set; }
+        public Brand Brand { get; set; }
         [Required]
         [Column("color", TypeName = "enum('White','Black','Black&White','Grey','Red','Orange','Yellow','Green','Cyan','Blue','Purple','Pink','Multicolor')")]
-        public ProductColor Color { get; set; }
+        public Color Color { get; set; }
 
         [InverseProperty("Product")]
         public virtual ICollection<ProductOrder> ProductOrder { get; set; }

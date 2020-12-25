@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Database.Enums;
 
 namespace Database
 {
@@ -13,7 +14,7 @@ namespace Database
         public int ProductId { get; set; }
         [Key]
         [Column("size", TypeName = "enum('36','38','40','42','44','46','48','50','52','54','56')")]
-        public string Size { get; set; }
+        public Size Size { get; set; }
         [Column("quantity")]
         public short Quantity { get; set; }
 

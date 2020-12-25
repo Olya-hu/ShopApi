@@ -82,7 +82,7 @@ namespace Database
 
                 entity.Property(e => e.Brand)
                     .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_general_ci");
+                    .HasCollation("utf8mb4_0900_ai_ci");
 
                 entity.Property(e => e.Category)
                     .HasCharSet("utf8mb4")

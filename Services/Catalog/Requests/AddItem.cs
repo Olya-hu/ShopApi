@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Database;
+using Database.Enums;
 
 namespace Services.Catalog.Requests
 {
@@ -13,15 +13,15 @@ namespace Services.Catalog.Requests
         public decimal Price { get; set; }
         public string Description { get; set; }
         [Required]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         [Required]
-        public string Category { get; set; }
+        public Category Category { get; set; }
         [Required]
-        public string Brand { get; set; }
+        public Brand Brand { get; set; }
         [Required]
-        public ProductColor Color { get; set; }
+        public Color Color { get; set; }
         [Required]
-        public string[] Sizes { get; set; }
+        public Size[] Sizes { get; set; }
         [Required]
         public short[] Quantities { get; set; }
     }

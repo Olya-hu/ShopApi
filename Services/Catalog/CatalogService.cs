@@ -57,7 +57,7 @@ namespace Services.Catalog
         public async Task<Dictionary<string, short>> GetSizesFor(int productId)
         {
             return (await _dbContext.ProductSize.Where(ps => ps.ProductId == productId).ToListAsync())
-                .ToDictionary(ps => ps.Size, ps => ps.Quantity);
+                .ToDictionary(ps => ps.Size.ToString(), ps => ps.Quantity);
         }
 
         public async Task AddProduct(AddItem request)
